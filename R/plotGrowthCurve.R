@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
-# PODNAME: tradis_comparison.R
-# ABSTRACT: tradis_comparison.R
+# PODNAME: plotGrowthCurve.R
+# ABSTRACT: plotGrowthCurve.R
 
 if(!require(getopt)){install.packages("getopt", repos = "http://cran.us.r-project.org")}
 library("getopt")
@@ -36,10 +36,17 @@ if(! is.null(opt$help) || is.null(opt$samplesheet ) )
   q(status=1);
 }
 
+samples = strsplit(opt$samples, split = " ")
+
 # set default outputplot filename
 if ( is.null(opt$outputplot ) ) { opt$outputplot = paste(opt$sample, ".outputplot.pdf",sep = "")}
 
-samples = strsplit(opt$samples, split = " ")
+if ( is.null(opt$timepoints ) ) {
+  writeLines(c(strwrap("No number of timepoints supplied. Using all supplied."),"\n"))
+  timepoints = set_timepoints (samples)
+} else { timepoints = opt$timepoints }
 
-#Creates a pdf document with all individual growth curves
-plot_growth(samples, opt$timepoints, outputplot, opt$mapping)
+
+my_data = prep_data(samples, timepoints, opt$mapping)
+
+
