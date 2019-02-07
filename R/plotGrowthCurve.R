@@ -11,8 +11,8 @@ if(!require(gridExtra)){install.packages("gridExtra", repos = "http://cran.us.r-
 library(gridExtra)
 if(!require(ggplot2)){install.packages("ggplot2", repos = "http://cran.us.r-project.org")}
 library(ggplot2)
-if(!require(readxl)){install.packages("readxl", repos = "http://cran.us.r-project.org")}
-library("readxl")
+if(!require(openxlsx)){install.packages("openxlsx", repos = "http://cran.us.r-project.org")}
+library("openxlsx")
 
 options(width=80)
 
@@ -49,4 +49,6 @@ if ( is.null(opt$timepoints ) ) {
 
 my_data = prep_data(samples, timepoints, opt$mapping)
 
-
+#For testing
+opt$samples="Data/KeioEven22-42_TricGrowthCurves.xlsx"
+opt$mapping = "Data/name tags.xlsx"

@@ -1,5 +1,6 @@
 prep_data <- function(samples, timepoints, mapping) {
 
+  
   #Check if mapping is given
   if ( is.null(mapping) ) {
     my_preped_data = merge_multple_plates(samples)
@@ -11,20 +12,21 @@ prep_data <- function(samples, timepoints, mapping) {
 }
 
 
-set_timepoints (samples) {
+set_timepoints <- function(samples) {
   #Check or set timepoints
-  temp_plate_data = read_xlsx(samples[1], sheet = 1)
-  timepoints = length(temp_plate_data[1,] - 3)
+  temp_plate_data = read.xlsx(samples[[1]], sheet = 1)
+  timepoints = length(temp_plate_data[1,]) - 4
     
   return(timepoints)
 }
 
-merge_multiple_plates(samples, timepoints){
+merge_multiple_plates <- function(samples, timepoints){
   
   for (i in 1:length(samples)) {
-    temp_plate_data = read_xlsx(samples[i], sheet = 1)
+    temp_plate_data = read.xlsx(samples[i], sheet = 1)
     temp_plate_data = temp_plate_data[-1,]
-    if ((length(temp_plate_data[1,]) - 3) != timepoints) {
+   
+    if ((length(temp_plate_data[1,]) - 4) != timepoints) {
       writeLines(c(strwrap("Different number of timepoints supplied in sample files."),"\n", paste0("Number of timepoints in samplefile ", samples[i], " is ",(length(temp_plate_data[1,]) - 3) ), strwrap("Skipping to next input file."), "\n"))
     } else {
       Sample =  rep(" ", mode = "character", length = length(temp_plate_data$Content))
@@ -41,10 +43,11 @@ merge_multiple_plates(samples, timepoints){
   return(my_data)
 }
 
-merge_multiple_plates_and_mapping(samples, mapping) {
+merge_multiple_plates_and_mapping <- function (samples, mapping) {
 
-  sheets = excel_sheets(mapping)
+  sheets = getSheetNames(mapping)
   check_ok = TRUE
+
   
   #Check if number of sheets is same as number of plates
   #Check if the names match
@@ -53,20 +56,24 @@ merge_multiple_plates_and_mapping(samples, mapping) {
     check_ok = FALSE
   }else {
     for (i in 1:length(sheets)) {
-      if (is.null(samples[paste0(sheets[i], "xlsx")])) {
+      temp_sample = strsplit(samples[[i]], "/")
+      temp_sample_name = temp_sample[[1]][length(temp_sample[[1]])]
+      temp_sample_name_without_xlsx = strsplit(temp_sample_name[[1]], ".xlsx")[[1]][1]
+      if (is.null(sheets[temp_sample_name_without_xlsx])) {
         writeLines(c(paste0("No sample file found for plate (plates).", sheets[i]) ,"\n"))
         check_ok = FALSE
       }
     }
   }
   if(check_ok) {
+    sheets = excel_sheets(mapping)
+    my_data = NULL
     for (i in 1:length(sheets)) {
        
-      sheets = excel_sheets(mapping)
-      temp_sheet_data = read_xlsx(mapping, sheet = sheets[i])
-      temp_plate_data = read_xlsx(samples[paste0(sheets[i], "xlsx")], sheet = 1)
+      temp_sheet_data = read.xlsx(mapping, sheet = sheets[i], colNames = FALSE)
+      temp_plate_data = read.xlsx(samples[[i]], sheet = 1)
       temp_plate_data = temp_plate_data[-1,]
-      if ((length(temp_plate_data[1,]) - 3) != timepoints) {
+      if ((length(temp_plate_data[1,]) - 4) != timepoints) {
         writeLines(c(strwrap("Different number of timepoints supplied in sample files."),"\n", paste0("Number of timepoints in samplefile ", samples[i], " is ",(length(temp_plate_data[1,]) - 3) ), strwrap("Skipping to next input file."), "\n"))
       } else {
         # merge data (this assumes that both files are in same order)
