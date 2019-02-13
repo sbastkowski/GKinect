@@ -54,6 +54,7 @@ merge_multiple_plates_and_mapping <- function (samples, mapping) {
   if ( length(sheets) != length(samples[[1]]) ) {
     writeLines(c(strwrap("Number of sheets in mapping does not match number of sample files (plates)."),"\n"))
     check_ok = FALSE
+    q(status=1);
   }else {
     for (i in 1:length(sheets)) {
       temp_sample = strsplit(samples[[1]][i], "/")
@@ -62,11 +63,11 @@ merge_multiple_plates_and_mapping <- function (samples, mapping) {
       if (is.null(sheets[temp_sample_name_without_xlsx])) {
         writeLines(c(paste0("No sample file found for plate (plates).", sheets[i]) ,"\n"))
         check_ok = FALSE
+        q(status=1);
       }
     }
   }
   if(check_ok) {
-    sheets = excel_sheets(mapping)
     my_data = NULL
     for (i in 1:length(sheets)) {
        

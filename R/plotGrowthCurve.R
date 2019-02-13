@@ -26,7 +26,7 @@ opt = getopt(matrix( c('help', 'h', 0, "logical",
                        'timepoints', 't', 0, "integer",
                        'mapping', 'm', 0, "character"), ncol=4, byrow=TRUE ) );
 
-if(! is.null(opt$help) || is.null(opt$samplesheet ) )
+if(! is.null(opt$help) || is.null(opt$samples ) )
 {
   cat(paste("Usage: plotGrowthCurve.R [-h] [-p outputplot.pdf] --samples samples.csv\n\n"));
   writeLines(c(strwrap("Reads in growth values from a sample sheet and plots them."),
@@ -42,7 +42,7 @@ if(! is.null(opt$help) || is.null(opt$samplesheet ) )
 samples = strsplit(opt$samples, split = " ")
 
 # set default outputplot filename
-if ( is.null(opt$outputplot ) ) { outputplot = paste(opt$sample, ".outputplot.pdf",sep = "")}
+if ( is.null(opt$outputplot ) ) { outputplot = paste(opt$sample, ".outputplot.pdf",sep = "")} else {outputplot=opt$outputplot}
 
 if ( is.null(opt$timepoints ) ) {
   writeLines(c(strwrap("No number of timepoints supplied. Using all supplied."),"\n"))
@@ -53,9 +53,9 @@ if ( is.null(opt$timepoints ) ) {
 my_data = prep_data(samples, timepoints, opt$mapping)
 
 plots=plot_growth(my_data, timepoints)
-
+cur_dev <- dev.cur()
 ggsave(file = outputplot, plots, width = 8.27, height = 11.69, unit = "in")
-
+dev.set(cur_dev)
 
 #For testing
 opt$samples="Data/KeioEven22-42_TricGrowthCurves.xlsx"
