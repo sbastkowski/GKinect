@@ -14,6 +14,9 @@ library(ggplot2)
 if(!require(openxlsx)){install.packages("openxlsx", repos = "http://cran.us.r-project.org")}
 library("openxlsx")
 
+source("data.R")
+source("plotting.R")
+
 options(width=80)
 
 opt = getopt(matrix( c('help', 'h', 0, "logical",
@@ -39,7 +42,7 @@ if(! is.null(opt$help) || is.null(opt$samplesheet ) )
 samples = strsplit(opt$samples, split = " ")
 
 # set default outputplot filename
-if ( is.null(opt$outputplot ) ) { opt$outputplot = paste(opt$sample, ".outputplot.pdf",sep = "")}
+if ( is.null(opt$outputplot ) ) { outputplot = paste(opt$sample, ".outputplot.pdf",sep = "")}
 
 if ( is.null(opt$timepoints ) ) {
   writeLines(c(strwrap("No number of timepoints supplied. Using all supplied."),"\n"))
@@ -49,6 +52,11 @@ if ( is.null(opt$timepoints ) ) {
 
 my_data = prep_data(samples, timepoints, opt$mapping)
 
+plots=plot_growth(my_data, timepoints)
+
+ggsave(file = outputplot, plots, width = 8.27, height = 11.69, unit = "in")
+
+
 #For testing
 opt$samples="Data/KeioEven22-42_TricGrowthCurves.xlsx"
-opt$mapping = "Data/name tags.xlsx"
+opt$mapping = "Data/metadata.xlsx"
