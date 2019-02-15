@@ -11,14 +11,15 @@ A set of tools to analyse and plot the output from a BMG FLUOStar OMEGA plate re
   * [License](#license)
   * [Feedback/Issues](#feedbackissues)
 
-## Introduction 
+## Introduction (#introduction)
 The GKinect is an R package to analyse and plot the optical density values from a BMG FLUOStar OMEGA plate reader. 
 
 ## Installation of R package from Github
 
-install.packages("githubinstall")
-library(githubinstall)
-githubinstall("GKinect")
+install.packages("devtools", repos = "http://cran.us.r-project.org")
+library("devtools")
+install_github("sbastkowski/GKinect")
+library("GKinects")
 
 For running the Scripts no package installation is necessary
 
