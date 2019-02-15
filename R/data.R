@@ -1,6 +1,7 @@
 prep_data <- function(samples, timepoints, mapping) {
 
-  
+  if(!require(openxlsx)){install.packages("openxlsx", repos = "http://cran.us.r-project.org")}
+  library("openxlsx")
   #Check if mapping is given
   if ( is.null(mapping) ) {
     my_preped_data = merge_multiple_plates(samples, timepoints)

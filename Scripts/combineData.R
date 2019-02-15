@@ -9,7 +9,7 @@ if(!require(openxlsx)){install.packages("openxlsx", repos = "http://cran.us.r-pr
 library("openxlsx")
 
 if(!require(githubinstall)){install.packages("githubinstall", repos = "http://cran.us.r-project.org")}
-library(githubinstall)
+library("githubinstall")
 githubinstall("GKinect")
 
 options(width=80)

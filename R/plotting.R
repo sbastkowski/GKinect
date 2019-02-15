@@ -1,5 +1,14 @@
 plot_growth <- function(sampleGrowth, timepoints) {
 
+  
+  if(!require(lattice)){install.packages("lattice", repos = "http://cran.us.r-project.org")}
+  library(lattice)
+  if(!require(gridExtra)){install.packages("gridExtra", repos = "http://cran.us.r-project.org")}
+  library(gridExtra)
+  if(!require(ggplot2)){install.packages("ggplot2", repos = "http://cran.us.r-project.org")}
+  library(ggplot2)
+
+  
   growthplots=list()
   for (i in 1:length(sampleGrowth[,1])){
     df=NULL

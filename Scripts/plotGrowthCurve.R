@@ -7,9 +7,9 @@ if(!require(getopt)){install.packages("getopt", repos = "http://cran.us.r-projec
 library("getopt")
 if(!require(openxlsx)){install.packages("openxlsx", repos = "http://cran.us.r-project.org")}
 library("openxlsx")
-if(!require(githubinstall)){install.packages("githubinstall", repos = "http://cran.us.r-project.org")}
-library(githubinstall)
-githubinstall("GKinect")
+if(!require(devtools)){install.packages("devtools", repos = "http://cran.us.r-project.org")}
+library("devtools")
+install_github("sbastkowski/GKinect")
 
 options(width=80)
 
