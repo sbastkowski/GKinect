@@ -3,7 +3,7 @@ prep_data <- function(samples, timepoints, mapping) {
   
   #Check if mapping is given
   if ( is.null(mapping) ) {
-    my_preped_data = merge_multple_plates(samples)
+    my_preped_data = merge_multiple_plates(samples, timepoints)
     writeLines(c(strwrap("No samplenames or metadat supplied supplied. Continue with Well content and plate."),"\n"))
   } else {
     my_preped_data = merge_multiple_plates_and_mapping(samples, mapping)
@@ -46,14 +46,11 @@ merge_multiple_plates <- function(samples, timepoints){
 merge_multiple_plates_and_mapping <- function (samples, mapping) {
 
   sheets = getSheetNames(mapping)
-  check_ok = TRUE
 
-  
   #Check if number of sheets is same as number of plates
   #Check if the names match
   if ( length(sheets) != length(samples[[1]]) ) {
     writeLines(c(strwrap("Number of sheets in mapping does not match number of sample files (plates)."),"\n"))
-    check_ok = FALSE
     q(status=1);
   }else {
     for (i in 1:length(sheets)) {
@@ -62,12 +59,11 @@ merge_multiple_plates_and_mapping <- function (samples, mapping) {
       temp_sample_name_without_xlsx = strsplit(temp_sample_name[[1]], ".xlsx")[[1]][1]
       if (is.null(sheets[temp_sample_name_without_xlsx])) {
         writeLines(c(paste0("No sample file found for plate (plates).", sheets[i]) ,"\n"))
-        check_ok = FALSE
         q(status=1);
       }
     }
   }
-  if(check_ok) {
+
     my_data = NULL
     for (i in 1:length(sheets)) {
        
@@ -83,7 +79,7 @@ merge_multiple_plates_and_mapping <- function (samples, mapping) {
         my_data = rbind(my_data, temp_merged_data)
        }
      }
-   }
+   
   
   return(my_data)
 

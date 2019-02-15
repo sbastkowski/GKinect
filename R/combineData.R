@@ -52,5 +52,5 @@ if (is.null(opt$output) ) {
 
 
 
-my_data = prep_data(samples, opt$timepoints, opt$mapping)
+my_data = prep_data(samples, opt$mapping)
 write.csv(my_data, output)
