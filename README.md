@@ -4,44 +4,63 @@ A set of tools to analyse and plot the output from a BMG FLUOStar OMEGA plate re
 
 
 ## Contents
-  * [Introduction][intro]
+  * [Introduction] (#introduction)
   * [Installation of R package from Github](#installation-of-r-package-from-github)
-  * [Usage](#usage)
-    * [Scripts](#scripts)
+  * [Script Usage](#script-usage)
   * [License](#license)
   * [Feedback/Issues](#feedbackissues)
 
-[intro]: ## Introduction
+## Introduction
 The GKinect is an R package to analyse and plot the optical density values from a BMG FLUOStar OMEGA plate reader. 
 
 ## Installation of R package from Github
 
 install.packages("devtools", repos = "http://cran.us.r-project.org")
+
 library("devtools")
+
 install_github("sbastkowski/GKinect")
+
 library("GKinects")
+
 
 For running the Scripts no package installation is necessary
 
 ## Script Usage
 
-Command-line usage instructions:
+### Command-line usage instructions:
 
 ./plotGrowthCurve.R [-h] --samples <sample1.xlsx sample2.xlsx ... sampleN.xlsx> -p <outplot.pdf> [-t timepoints]
 
-Required:
+### Required:
+
 --samples : 'samplesheet(s) containing growth values for each well (eg. condition, mutant ect.). Input can be multiple files. If no mapping is supplied they will be additionally labelled by filename in the output plot.
--p : output filename for growth curve plots.
-Optional:
+
+
+-p : output filename for growth curve plots (pdf extention).
+
+
+### Optional:
+
+
 -t : number of time points meassured.
+
 -m : mapping filename that links actual samplenames to well content names.
 
 ./combineData.R --samples <sample1.xlsx sample2.xlsx ... sampleN.xlsx> --mapping <mapping.xlsx> 
-Required:
+
+
+### Required:
+
 --samples : 'samplesheet(s) containing growth values for each well (eg. condition, mutant ect.).
+
 -m : mapping filename that links actual samplenames to well content names.Input can be multiple files. 
-Optional:
+
+
+### Optional:
+
 -t : number of time points meassured.
+
 -o : output filename (csv file extention).
 
 
