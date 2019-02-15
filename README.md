@@ -4,7 +4,7 @@ A set of tools to analyse and plot the output from a BMG FLUOStar OMEGA plate re
 
 
 ## Contents
-  * [Introduction] (#introduction)
+  * [Introduction](#introduction)
   * [Installation of R package from Github](#installation-of-r-package-from-github)
   * [Script Usage](#script-usage)
   * [License](#license)
